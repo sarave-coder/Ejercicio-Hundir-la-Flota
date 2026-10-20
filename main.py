@@ -1,6 +1,6 @@
 from clases import *
 import clases
-import variables_S as var 
+import variables as var 
 import time
 
 juego_en_marcha = True #Comenzar el juego

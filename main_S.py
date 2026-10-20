@@ -36,8 +36,7 @@ def jugar():
         cpu.tablero.mostrar(ocultar_barcos=True)
         turno(usuario, cpu)
 
-if __name__ == "__main__":
-    jugar()
+
 
 
     
