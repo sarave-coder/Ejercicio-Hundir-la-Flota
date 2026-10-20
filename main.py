@@ -1,44 +1,68 @@
-import random
-from variables import *
-from clases import jugador,maquina
+from clases import *
+import clases
+import variables_S as var 
+import time
 
-'''Turno de un jugador, si acierta repite'''
-def turno(atacante,defensor):
+juego_en_marcha = True #Comenzar el juego
+turno_jugador = False  # Para que empiece el rival
 
-    while defensor.tablero.quedan_barcos():
-        fila, col = atacante.elegir_disparo()
-        resultado = defensor.tablero.recibir_disparo(fila, col)
-
-        if resultado == "repetido":
-            print("Ya lo habías intentado. Prueba otra vez")
-        
-        if resultado == "tocado":
-            print(f"{atacante.nombre}:({fila},{col}Tocado!")
-
-        if atacante.nombre != "maquina":
-            print("Tablero de la máquina")
-            
-            defensor.tablero.mostrar(ocultar_barcos= True)
-            continue # repite turno
-        print(f"{atacante.nombre}:({fila},{col}Agua")
-        break
-
-def jugar():
-    print("=== Hundir la flota===")
-    usuario = jugador("nombre")
-    cpu = maquina()
-
-    while True:
-        print("\nTu tablero") 
-        usuario.tablero.mostrar()
-
-        print("\nTablero de la máquina")
-        cpu.tablero.mostrar(ocultar_barcos=True)
-        turno(usuario, cpu)
-
-if __name__ == "__main__":
-    jugar()
+    #comienza el juego
+print("*Bienvenido al juego 'Hundir la flota*")
+time.sleep(3)
 
 
-    
-    
+    #crear tableros
+tablero_rival_barcos = clases.crear_tablero()
+print(tablero_rival_barcos)
+print("________")
+tablero_rival_disparos = clases.crear_tablero()
+print(tablero_rival_disparos)
+print("________")
+tablero_jugador_barcos = clases.crear_tablero()
+print(tablero_jugador_barcos)
+print("________")
+tablero_jugador_disparos = clases.crear_tablero()
+print(tablero_jugador_disparos)
+print("________")
+time.sleep(3)
+
+
+    #colocar barcos
+tablero_jugador_barcos = clases.colocar_barcos(tablero_jugador_barcos, var.barco_jugador)
+print("El tablero del jugador es:")
+print(tablero_jugador_barcos)
+tablero_rival_barcos = clases.colocar_barcos(tablero_rival_barcos, var.barco_rival)
+print("El tablero del rival es:")
+print(tablero_jugador_disparos)
+
+time.sleep(3)
+print("¡Empieza el juego!")
+
+
+    #bucle del juego
+while juego_en_marcha:
+    if turno_jugador:
+            print("\n--- Es tu turno ---")
+            print("El tablero del rival es:")
+            print(tablero_rival_disparos)
+            tablero_rival_barcos, var.lista_disparos = clases.disparo(tablero_rival_barcos, var.lista_disparos)
+            clases.actualizar_tablero_disparos(tablero_rival_disparos, tablero_rival_barcos)
+            if clases.comprobar_hundido(tablero_rival_barcos):
+                print("\n¡¡¡Has ganado!!! ;)")
+                juego_en_marcha = False
+            else:
+                turno_jugador = False
+    else:
+            print("\n--- Es el turno del rival... ---")
+            time.sleep(5)
+            fila_maquina, columna_maquina = clases.disparo_rival(tablero_jugador_barcos, var.disparos_maquina)
+            print(f"El rival ha disparado a...: ({fila_maquina}, {columna_maquina})")
+            print("Tablero de disparos del rival (contra ti):")
+            print(tablero_jugador_disparos)
+            print("\nTu tablero de barcos:")
+            print(tablero_jugador_barcos)
+            if clases.comprobar_hundido(tablero_jugador_barcos):
+                print("\n¡Oh, tu rival ha ganado.... :'( )")
+                juego_en_marcha = False
+            else:
+                turno_jugador = True
