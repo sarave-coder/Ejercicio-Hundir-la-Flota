@@ -4,7 +4,7 @@ Archivo de constantes para el juego Hundir la Flota.
 """
 
 # DIMENSIONES DEL TABLERO
-TABLERO = 10 # Tablero 10x10
+TAMANO = 10 # Tablero 10x10
 
 # INVENTARIO DE BARCOS
 # =========================

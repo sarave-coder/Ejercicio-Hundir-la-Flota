@@ -1,76 +1,104 @@
-#funciones necesarias para el funcionamiento del juego
-import numpy as np
 import random
+from variables import *
 
+class Tablero: 
+    ''' Tablero de 10x10 '''
+    
+    def __init__(self):
+        self.casillas = [[AGUA] * TAMANO for _ in range(TAMANO)]
 
-def crear_tablero():
-    tablero = np.full((10, 10), "_")
-    return tablero
-
-
-
-def colocar_barcos(tablero, barcos):
-    for i in barcos:
-        for j in i:
-            tablero[j[0], j[1]] = "O"
-    return tablero
-
-
-def disparo(tablero, lista_disparos):
-    while True:
-        try:
-            fila = int(input("Selecciona la fila,por favor: "))
-            columna = int(input("Selecciona la columna, por favor: "))
-            if 0 <= fila < tablero.shape[0] and 0 <= columna < tablero.shape[1]: #primer y segundo elemento
-                casilla_disparada = (fila, columna)
-                if casilla_disparada in lista_disparos:
-                    print("Ya has disparado aquí..")
-                    continue  # Vuelve a pedir coordenadas
-                else:
-                    lista_disparos.append(casilla_disparada)
-                    if tablero[fila, columna] == "O":
-                        tablero[fila, columna] = "X"
-                        print("Muy bien, impacto! :)")
-                        return tablero, lista_disparos
-                    elif tablero[fila, columna] == "#" or tablero[fila, columna] == "X":
-                        print("Ops, ya has disparado aquí..")
-                        continue # Vuelve a pedir coordenadas
-                    else:
-                        tablero[fila, columna] = "#"
-                        print("Oh, has fallado...")
-                        return tablero, lista_disparos
+    ''' Comprobar que el barco cabe en el tablero y no pisa a otro barco'''
+    def hueco(self, fila, col,eslora,horizontal):
+        for i in range(eslora):
+            if horizontal: f = fila
             else:
-                print("Coordenadas fuera del tablero, elige un número entre 0 y 9..")
-        except ValueError: #equivocacion
-            print("Entrada inválida. Es necesario introducir un número del 0 al 9..")
+                fila + i
 
+                if horizontal: c=col
+                else:
+                    col
+                    if f >= TAMANO or c >= TAMANO:
+                        return False
+                    
+                    if self.casillas[fila][col] != AGUA:
+                        return False
+                    return True
 
+    ''' Colocar los barcos en posiciones aleatorias'''
+    def colocar_barcos(self):
+        for eslora in BARCOS:
+            colocado = False
+            while not colocado:
+                fila = random.randint(0, TAMANO -1)
+                col = random.randit(0, TAMANO -1)
+                horizontal = random.choice([True, False])
 
-def disparo_rival(tablero_jugador, disparos_maquina):
-    tamaño = tablero_jugador.shape[0]
-    while True:
-        fila = random.randint(0, tamaño - 1)  #disparo random
-        columna = random.randint(0, tamaño - 1)
-        if (fila, columna) not in disparos_maquina:
-            disparos_maquina.add((fila, columna))
-            return fila, columna
-        
+                if self.hueco(fila, col, eslora, horizontal):
+                    for i in range(eslora):
+                        if horizontal: f=fila
+                        else: fila + i 
 
-def actualizar_tablero_disparos(tablero_disparos, tablero_barcos):
-    for r in range(tablero_barcos.shape[0]):
-        for c in range(tablero_barcos.shape[1]):
-            if tablero_barcos[r, c] == "X" and tablero_disparos[r, c] != "X":
-                tablero_disparos[r, c] = "X"
-            elif tablero_barcos[r, c] == "#" and tablero_disparos[r, c] != "#":
-                tablero_disparos[r, c] = "#"
+                        if horizontal: c=col + i
+                        else:
+                            col
+                            self.casillas[f][c] = BARCO
+                            colocado = True
 
-def actualizar_tablero_disparos_rival(tablero_jugador_disparos, tablero_jugador_barcos):
-    for r in range(tablero_jugador_barcos.shape[0]):
-        for c in range(tablero_jugador_barcos.shape[1]):
-            if tablero_jugador_barcos[r, c] == "X" and tablero_jugador_disparos[r, c] != "X":
-                tablero_jugador_disparos[r, c] = "X"
-            elif tablero_jugador_barcos[r, c] == "#" and tablero_jugador_disparos[r, c] != "#":
-                tablero_jugador_disparos[r, c] = "#"
+    '''Disparar'''
+    def disparar(self,fila,col):
+        casilla=self.casilla[fila][col]
+        if casilla == BARCO:
+            self.casilla[fila][col] = "TOCADO"
+            return "tocado"
+        if casilla == AGUA:
+            self.casilla[fila][col] = "FALLO"
+            return"agua"
 
-def comprobar_hundido(tablero):
-    return not np.any(tablero == "O")
+    '''Imprimir tablero. Si ocultar_barcos = True, no se ven los barcos'''
+
+    def imprimir(self, ocultar_barcos=True):
+        print(" " + " ".join(str(n) for n in range(TAMANO)))
+        for i, fila in enumerate(self.casillas):
+            visible = [AGUA if ocultar_barcos and casilla == BARCO else casilla for casilla in fila]
+            print(str(i) + " " + " ".join(str(casilla) for casilla in visible))
+
+'''jugador'''
+class jugador:
+
+    def __init__(self,nombre):
+        self.nombre = nombre
+        self.tablero = Tablero()
+        self.tablero.colocar_barcos()
+
+    def elegir_disparo(self):
+        while True:
+            entrada = input("Tu disparo(fila, columna)")
+
+            try:
+                fila, col = map(int, entrada.split(","))
+                fila, col = int(fila), int(col)
+
+                if 0 <= fila < TAMANO and 0 <= col < TAMANO:
+                    return fila, col
+                
+            except ValueError:
+                print("Entrada inválida. Usa dos números del 0 al 9.")
+                continue
+
+''' Máquina'''
+class maquina:
+    def __init__(self):
+        self.nombre = "maquina"
+        self.tablero = Tablero()
+        self.tablero.colocar_barcos()
+        self.disparos_hechos = set()
+
+    def elegir_disparo(self):
+        while True:
+            fila = random.randint(0, TAMANO - 1)
+            col = random.randint(0, TAMANO - 1)
+            disparo = (fila, col)
+            if disparo not in self.disparos_hechos:
+                self.disparos_hechos.add(disparo)
+                return disparo
+    
