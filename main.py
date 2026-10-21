@@ -1,6 +1,6 @@
 import random
-from variables import (TABLERO_FILAS, TABLERO_COLUMNAS, MSG_TOCADO, MSG_AGUA)
-from clases import tablero, todos_barcos
+from variables import *
+from clases import *
 
 '''Turno del jugador'''
 def turno_jugador(tablero_maquina):
@@ -27,7 +27,7 @@ def turno_maquina(tablero_jugador):
     print(f"La máquina dispara en {fila}, {col} -> {MSG_TOCADO if acierto else MSG_AGUA}")
 
 '''Función principal del juego'''
-def juego():
+def jugar():
     tablero_jugador = tablero() #tablero jugador
     tablero_maquina = tablero() #tablero maquina
 
@@ -46,5 +46,5 @@ def juego():
         turno_maquina(tablero_jugador)
 
 if __name__ == "__main__":
-    juego()
+    jugar()
     
