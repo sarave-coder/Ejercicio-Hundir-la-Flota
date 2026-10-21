@@ -1,0 +1,62 @@
+tablero_jugador = crear_tablero()
+    tablero_maquina = crear_tablero()
+
+    print("Colocando tus barcos...")
+    colocar_barcos_aleatorios(tablero_jugador)
+    colocar_barcos_aleatorios(tablero_maquina)
+
+    while True:
+        print("\n" + "="*30)
+        print("TU TABLERO:")
+        imprimir_tablero(tablero_jugador, ocultar_barcos=False)
+
+        print("\nTABLERO DE LA MÁQUINA (Tus ataques):")
+        imprimir_tablero(tablero_maquina, ocultar_barcos=True)
+
+        # Turno del jugador
+        print("\n--- TU TURNO ---")
+        try:
+            f_jugador = int(input(f"Elige la fila (0 a {TAMANO_TABLERO-1}): "))
+            c_jugador = int(input(f"Elige la columna (0 a {TAMANO_TABLERO-1}): "))
+        except ValueError:
+            print("Por favor, introduce un número válido.")
+            continue
+
+        if not (0 <= f_jugador < TAMANO_TABLERO and 0 <= c_jugador < TAMANO_TABLERO):
+            print("Coordenadas fuera del tablero. Inténtalo de nuevo.")
+            continue
+
+        if tablero_maquina[f_jugador][c_jugador] in ["X", "O"]:
+            print("Ya habías disparado a estas coordenadas. Pierdes turno.")
+        elif tablero_maquina[f_jugador][c_jugador] == "B":
+            print("¡Impacto! Le has dado a un barco enemigo.")
+            tablero_maquina[f_jugador][c_jugador] = "X"
+        else:
+            print("¡Agua!")
+            tablero_maquina[f_jugador][c_jugador] = "O"
+
+        if verificar_victoria(tablero_maquina):
+            print("\n ¡Felicidades! Has hundido todos los barcos enemigos y has ganado.")
+            break
+
+        # Turno de la máquina
+        print("\n--- TURNO DE LA MÁQUINA ---")
+        f_maq = random.randint(0, TAMANO_TABLERO - 1)
+        c_maq = random.randint(0, TAMANO_TABLERO - 1)
+        print(f"La máquina dispara a: Fila {f_maq}, Columna {c_maq}")
+
+        if tablero_jugador[f_maq][c_maq] == "B":
+            print("¡La máquina ha dado a uno de tus barcos!")
+            tablero_jugador[f_maq][c_maq] = "X"
+        elif tablero_jugador[f_maq][c_maq] == "~":
+            print("La máquina ha fallado (Agua).")
+            tablero_jugador[f_maq][c_maq] = "O"
+        else:
+            print("La máquina disparó a una posición ya conocida.")
+
+        if verificar_victoria(tablero_jugador):
+            print("\n La máquina ha hundido todos tus barcos. ¡Has perdido!")
+            break
+
+if __name__ == "__main__":
+    jugar()

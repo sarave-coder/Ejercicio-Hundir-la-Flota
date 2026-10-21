@@ -1,104 +1,114 @@
 import random
-from variables import *
 
-class Tablero: 
-    ''' Tablero de 10x10 '''
-    
-    def __init__(self):
-        self.casillas = [[AGUA] * TAMANO for _ in range(TAMANO)]
+class Tablero:
 
-    ''' Comprobar que el barco cabe en el tablero y no pisa a otro barco'''
-    def hueco(self, fila, col,eslora,horizontal):
-        for i in range(eslora):
-            if horizontal: f = fila
-            else:
-                fila + i
+    def __init__(self, jugador):
+        self.jugador = jugador
+        self.tablero = []
 
-                if horizontal: c=col
-                else:
-                    col
-                    if f >= TAMANO or c >= TAMANO:
-                        return False
-                    
-                    if self.casillas[fila][col] != AGUA:
-                        return False
-                    return True
+        # Crear el tablero donde guardaremos los disparos
+        self.disparos = []
 
-    ''' Colocar los barcos en posiciones aleatorias'''
+        for i in range(10):
+            fila = []
+
+            for j in range(10):
+                fila.append(" ")
+
+            self.disparos.append(fila)
+
+        for i in range(10):
+            fila = []
+            for j in range(10):
+                fila.append(" ")
+            self.tablero.append(fila)
+
+    def imprimirtablero(self, tablero):
+        for fila in tablero:
+            for columna in fila:
+                print(f"[{columna}]", end=" ")
+            print()
+
     def colocar_barcos(self):
-        for eslora in BARCOS:
-            colocado = False
-            while not colocado:
-                fila = random.randint(0, TAMANO -1)
-                col = random.randit(0, TAMANO -1)
-                horizontal = random.choice([True, False])
 
-                if self.hueco(fila, col, eslora, horizontal):
-                    for i in range(eslora):
-                        if horizontal: f=fila
-                        else: fila + i 
+        # 4 barcos de 1 posición
+        self.tablero[7][7] = "B"
+        self.tablero[7][9] = "B"
+        self.tablero[5][9] = "B"
+        self.tablero[9][9] = "B"
 
-                        if horizontal: c=col + i
-                        else:
-                            col
-                            self.casillas[f][c] = BARCO
-                            colocado = True
+        # 3 barcos de 2 posiciones
+        self.tablero[3][6] = "B"
+        self.tablero[4][6] = "B"
 
-    '''Disparar'''
-    def disparar(self,fila,col):
-        casilla=self.casilla[fila][col]
-        if casilla == BARCO:
-            self.casilla[fila][col] = "TOCADO"
-            return "tocado"
-        if casilla == AGUA:
-            self.casilla[fila][col] = "FALLO"
-            return"agua"
+        self.tablero[8][6] = "B"
+        self.tablero[9][6] = "B"
 
-    '''Imprimir tablero. Si ocultar_barcos = True, no se ven los barcos'''
+        self.tablero[6][7] = "B"
+        self.tablero[6][8] = "B"
 
-    def imprimir(self, ocultar_barcos=True):
-        print(" " + " ".join(str(n) for n in range(TAMANO)))
-        for i, fila in enumerate(self.casillas):
-            visible = [AGUA if ocultar_barcos and casilla == BARCO else casilla for casilla in fila]
-            print(str(i) + " " + " ".join(str(casilla) for casilla in visible))
+        # 2 barcos de 3 posiciones
+        self.tablero[3][2] = "B"
+        self.tablero[4][2] = "B"
+        self.tablero[5][2] = "B"
 
-'''jugador'''
-class jugador:
+        self.tablero[3][1] = "B"
+        self.tablero[4][1] = "B"
+        self.tablero[5][1] = "B"
 
-    def __init__(self,nombre):
-        self.nombre = nombre
-        self.tablero = Tablero()
-        self.tablero.colocar_barcos()
+        # 1 barco de 4 posiciones
+        self.tablero[1][5] = "B"
+        self.tablero[2][5] = "B"
+        self.tablero[3][5] = "B"
+        self.tablero[4][5] = "B"
 
-    def elegir_disparo(self):
-        while True:
-            entrada = input("Tu disparo(fila, columna)")
 
-            try:
-                fila, col = map(int, entrada.split(","))
-                fila, col = int(fila), int(col)
+    def disparar(self, fila, columna):
 
-                if 0 <= fila < TAMANO and 0 <= col < TAMANO:
-                    return fila, col
-                
-            except ValueError:
-                print("Entrada inválida. Usa dos números del 0 al 9.")
-                continue
+        # Comprobamos si ya se ha disparado en esta posición
+        if self.disparos[fila][columna] != " ":
+            print("Ya habías disparado aquí")
+            return None
 
-''' Máquina'''
-class maquina:
-    def __init__(self):
-        self.nombre = "maquina"
-        self.tablero = Tablero()
-        self.tablero.colocar_barcos()
-        self.disparos_hechos = set()
+        # Comprobamos si hay un barco en la posición elegida
+        if self.tablero[fila][columna] == "B":
 
-    def elegir_disparo(self):
-        while True:
-            fila = random.randint(0, TAMANO - 1)
-            col = random.randint(0, TAMANO - 1)
-            disparo = (fila, col)
-            if disparo not in self.disparos_hechos:
-                self.disparos_hechos.add(disparo)
-                return disparo
-    
+            print("¡Tocado!")
+
+            # Marcamos el impacto en el tablero real
+            self.tablero[fila][columna] = "x"
+
+            # Registramos el impacto en el tablero de disparos
+            self.disparos[fila][columna] = "x"
+
+            # Devolvemos True porque el disparo ha acertado
+            return True
+
+        else:
+
+            print("Agua")
+
+            # Marcamos el agua en el tablero real
+            self.tablero[fila][columna] = "o"
+
+            # Registramos el agua en el tablero de disparos
+            self.disparos[fila][columna] = "o"
+
+            # Devolvemos False porque el disparo ha fallado
+            return False
+
+    def disparo_maquina(self, tablero_usuario):
+        # Elegir una fila y una columna aleatorias
+        fila = random.randint(0, 9)
+        columna = random.randint(0, 9)
+
+        print(f"La máquina dispara a la fila {fila}, columna {columna}")
+
+        # Disparar contra el tablero del usuario
+        resultado = tablero_usuario.disparar(fila, columna)
+
+        # Mostrar el tablero del usuario después del disparo
+        print("\nTablero de tu flota:")
+        tablero_usuario.imprimirtablero(tablero_usuario.tablero)
+
+        return resultado
