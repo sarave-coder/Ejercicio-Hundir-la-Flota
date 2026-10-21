@@ -8,7 +8,7 @@ TABLERO_FILAS = 10
 TABLERO_COLUMNAS = 10
 
 # Símbolos del juego
-AGUA = " "       # Casilla vacía
+AGUA = "."       # Casilla vacía
 BARCO = "B"      # Casilla con barco
 TOCADO = "X"     # Barco tocado
 FALLO = "O"      # Disparo al agua
