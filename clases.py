@@ -10,7 +10,7 @@ class tablero:
              # # Todas las casillas empiezan con el símbolo del agua.
 
     '''Mostrar tablero'''
-    def mostrar_tablero(self, ocultar_barcos=False):
+    def mostrar_tablero(self, ocultar_barcos=False): # Oculta los barcos del rival
         print("   " + " ".join(str(i) for i in range(TABLERO_COLUMNAS)))
 
         # Recorrer las filas del tablero
