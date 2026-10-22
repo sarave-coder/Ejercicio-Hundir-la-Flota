@@ -8,27 +8,33 @@ def turno_jugador(tablero_maquina):
 
     while True:
         try:
+            #Pedir al jugador las coordenadas del disparo
             fila = int(input(f"Fila (0-{TABLERO_FILAS - 1}): "))
             col = int(input(f"Columna (0-{TABLERO_COLUMNAS - 1}): "))
 
+            # Comprobar que las coordenadas son válidas
             if not (0 <= fila < TABLERO_FILAS and 0 <= col < TABLERO_COLUMNAS):
                 print("Coordenadas fuera del rango. Inténtalo de nuevo.")
                 continue
 
+            # Disparar al tablero de la máquina
             acierto = tablero_maquina.disparar(fila, col)
 
             # Si devuelve None, el disparo no es válido
             if acierto is None:
                 continue
 
+            # Mostrar el resultado del disparo
             if acierto:
                 print(MSG_TOCADO)
             else:
                 print(MSG_AGUA)
 
+            # Terminar el turno después de un disparo válido
             return
 
         except ValueError:
+            # Se ejecuta si el jugador escribe algo que no es un entero
             print("Debes introducir números enteros.")
 
 
@@ -43,6 +49,7 @@ def turno_maquina(tablero_jugador):
         if tablero_jugador.grid[fila][col] not in ("X", "O"):
             break
 
+    # Disparar al tablero del jugador
     acierto = tablero_jugador.disparar(fila, col)
 
     if acierto:
