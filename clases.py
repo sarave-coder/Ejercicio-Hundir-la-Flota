@@ -68,7 +68,7 @@ class tablero:
 
     ''' Colocar todos los barcos'''
     def todos_barcos(self):
-        # Recorrer cada tipo de barco de la flota
+        # Recorrer cada tipo de barco de la flota y los coloca
         for eslora, cantidad in BARCOS_CONFIG:
             #Colocar la cantidad indicada de barcos
             for _ in range(cantidad):
