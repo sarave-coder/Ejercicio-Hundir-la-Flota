@@ -9,7 +9,7 @@ variables.py: donde se crean las constantes
     Símbolos del juego
     Mensajes del juego
 
-clases.py: donde está ubicada la clase tablero
+clases.py: donde está ubicada la clase tablero (agrupar datos y funciones facilitando la organización del código)
     Métodos para crear el tablero
     Colocar los barcos de forma aleatoria
     Ocultar el tablero enemigo
