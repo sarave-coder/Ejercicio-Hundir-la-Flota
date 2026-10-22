@@ -14,11 +14,11 @@ clases.py: donde está ubicada la clase tablero (agrupar datos y funciones facil
     Colocar los barcos de forma aleatoria
     Ocultar el tablero enemigo
     Mostrar las casillas
-    Gestionar los disparos
+    Gestionar los disparos (antes de disparar comprueba que las coordenadas sean correctas y si se había disparado anteriormente en la casilla)
 
 main.py: archivo princpial donde se importa la clase tablero para utilizarlo y dirigir la partida
 
     Creación de los tableros para los dos jugadores (jugador y máquina)
     Pedir coordenadas de ambos jugadores
     Gestionar turnos
-    Bucle con inicio del juego 
+    Bucle con inicio del juego (después de cada turno se comprueba si quedan barcos sin tocar con función "barcos_restantes)
