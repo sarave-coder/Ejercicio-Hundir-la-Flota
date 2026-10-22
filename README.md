@@ -1,6 +1,7 @@
 # Ejercicio-Hundir-la-Flota
 
-Reglas:
+# RETO
+Entender las reglas:
 
 1. Hay dos jugadores: tú y la máquina
 2. Un **tablero de 10 x 10** posiciones donde irán los barcos
@@ -18,6 +19,7 @@ Los barcos son:**
 7. En los turnos de la máquina, si acerta también le vuelve a tocar. ¿Dónde dispara la maquina? A un punto aleatorio en tu tablero.
 8. Si se hunden todos los barcos de un jugador, el juego acaba y gana el otro.
 
+# PONER EN PRÁCTICA LO APRENDIDO EN EL RAMPUP SIN QUE VISUAL STUDIO ME BOICOTEARA
 
 # Proyecto dividido en 3 archivos:
 
@@ -37,13 +39,14 @@ Los barcos son:**
       casilla)
 
 # main.py: archivo princpial donde se importa la clase tablero para utilizarlo y dirigir la partida
-
     - Creación de los tableros para los dos jugadores (jugador y máquina)
     - Pedir coordenadas de ambos jugadores
     - Gestionar turnos
     - Bucle con inicio del juego (después de cada turno se comprueba si quedan barcos sin tocar con función "barcos_restantes)
 
-# Mejoras
+# HACER QUE FUNCIONE!
+
+# Mejoras relacionadas con el reto inicial
 
 1. Estética del tablero y mensajes
 2. Comprobar que un barco completo ha sido hundido
