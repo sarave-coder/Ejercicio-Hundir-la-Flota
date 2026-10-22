@@ -28,7 +28,7 @@ Los barcos son:**
     - Símbolos del juego
     - Mensajes del juego
 
-# clases.py: donde está ubicada la clase tablero (agrupar datos y funciones facilitando la organización del código)
+# clases.py: donde está ubicada la clase tablero (agrupar datos y métodos facilitando la organización del código)
     - Métodos para crear el tablero
     - Colocar los barcos de forma aleatoria
     - Ocultar el tablero enemigo
