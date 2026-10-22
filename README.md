@@ -19,25 +19,32 @@ Los barcos son:**
 8. Si se hunden todos los barcos de un jugador, el juego acaba y gana el otro.
 
 
-Proyecto dividido en 3 archivos:
+# Proyecto dividido en 3 archivos:
 
-variables.py: donde se crean las constantes que no vayan a cambiar 
-    Tablero: 10x10
-    Creación de tablero con listas de listas
-    Características de la flota
-    Símbolos del juego
-    Mensajes del juego
+# variables.py: donde se crean las constantes que no vayan a cambiar 
+    - Tablero: 10x10
+    - Creación de tablero con listas de listas
+    - Características de la flota
+    - Símbolos del juego
+    - Mensajes del juego
 
-clases.py: donde está ubicada la clase tablero (agrupar datos y funciones facilitando la organización del código)
-    Métodos para crear el tablero
-    Colocar los barcos de forma aleatoria
-    Ocultar el tablero enemigo
-    Mostrar las casillas
-    Gestionar los disparos (antes de disparar comprueba que las coordenadas sean correctas y si se había disparado anteriormente en la casilla)
+# clases.py: donde está ubicada la clase tablero (agrupar datos y funciones facilitando la organización del código)
+    - Métodos para crear el tablero
+    - Colocar los barcos de forma aleatoria
+    - Ocultar el tablero enemigo
+    - Mostrar las casillas
+    - Gestionar los disparos (antes de disparar comprueba que las coordenadas sean correctas y si se había disparado anteriormente en la
+      casilla)
 
-main.py: archivo princpial donde se importa la clase tablero para utilizarlo y dirigir la partida
+# main.py: archivo princpial donde se importa la clase tablero para utilizarlo y dirigir la partida
 
-    Creación de los tableros para los dos jugadores (jugador y máquina)
-    Pedir coordenadas de ambos jugadores
-    Gestionar turnos
-    Bucle con inicio del juego (después de cada turno se comprueba si quedan barcos sin tocar con función "barcos_restantes)
+    - Creación de los tableros para los dos jugadores (jugador y máquina)
+    - Pedir coordenadas de ambos jugadores
+    - Gestionar turnos
+    - Bucle con inicio del juego (después de cada turno se comprueba si quedan barcos sin tocar con función "barcos_restantes)
+
+# Mejoras
+
+1. Estética del tablero y mensajes
+2. Comprobar que un barco completo ha sido hundido
+3. Saber quién gana al finalizar la partida
