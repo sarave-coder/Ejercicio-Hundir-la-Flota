@@ -1,8 +1,27 @@
 # Ejercicio-Hundir-la-Flota
 
+Reglas:
+
+1. Hay dos jugadores: tú y la máquina
+2. Un **tablero de 10 x 10** posiciones donde irán los barcos
+3. Lo primero que se hace es colocar los barcos. Para este juego **los barcos se colocan de manera aleatoria. 
+
+Los barcos son:**
+    * 4 barcos de 1 posición de eslora
+    * 3 barcos de 2 posiciones de eslora
+    * 2 barcos de 3 posiciones de eslora
+    * 1 barco de 4 posiciones de eslora
+
+4. Tanto tú, como la máquina tenéis un tablero con barcos, y se trata de ir "disparando" y hundiendo los del adversario hasta que un jugador se queda sin barcos, y por tanto, pierde.
+5. Funciona por turnos y empiezas tú.
+6. En cada turno disparas a una coordenada (X, Y) del tablero adversario. **Si aciertas, te vuelve a tocar**. En caso contrario, le toca a la máquina.
+7. En los turnos de la máquina, si acerta también le vuelve a tocar. ¿Dónde dispara la maquina? A un punto aleatorio en tu tablero.
+8. Si se hunden todos los barcos de un jugador, el juego acaba y gana el otro.
+
+
 Proyecto dividido en 3 archivos:
 
-variables.py: donde se crean las constantes
+variables.py: donde se crean las constantes que no vayan a cambiar 
     Tablero: 10x10
     Creación de tablero con listas de listas
     Características de la flota

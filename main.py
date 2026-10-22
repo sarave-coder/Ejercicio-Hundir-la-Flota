@@ -6,6 +6,8 @@ from clases import tablero
 def turno_jugador(tablero_maquina):
     """Turno del jugador."""
 
+    # Repetir instrucciones mientras una condición sea verdadera.
+    # Se usa cuando no se sabe cuántas veces se repetirá el bloque de código.
     while True:
         try:
             #Pedir al jugador las coordenadas del disparo
@@ -47,7 +49,7 @@ def turno_maquina(tablero_jugador):
         col = random.randint(0, TABLERO_COLUMNAS - 1)
 
         if tablero_jugador.grid[fila][col] not in ("X", "O"):
-            break
+            break # No crear un bucle infinito
 
     # Disparar al tablero del jugador
     acierto = tablero_jugador.disparar(fila, col)
